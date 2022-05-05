@@ -1,0 +1,30 @@
+schema @site(type: "playground") {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  myUsers: [User] @site(q: )
+  allPets: [Pet]
+  userById(id: ID!): User
+}
+
+type Mutation {
+  createUser(id: ID, name: String): User
+  createPet(id: ID, name: String, userId: ID): Pet 
+}
+
+type Pet {
+  id: ID!
+  name: String
+  owner: User @site(ref: "userId")
+  _siteQuery: String
+  _siteSubject: String
+  _siteValidTime: String
+}
+
+type User {
+  id: ID!
+  name: String
+  pets: [Pet] @site(ref: "userId")
+}
